@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,25 +18,50 @@ namespace WindowsFormsApp1
         BindingList<User> users = new BindingList<User>();
         public Form1()
         {
+            InitializeComponent();
+
             listBox1.DataSource = users;
             listBox1.ValueMember = "ID";
             listBox1.DisplayMember = "FullName";
 
-            InitializeComponent();
-            label1.Text = Resource1.LastName;
-            label2.Text = Resource1.FirstName;
+            label1.Text = Resource1.FullName;
+            //label2.Text = Resource1.FirstName;
             button1.Text = Resource1.Add;
+            button2.Text = Resource1.Write;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             var u = new User()
             {
-                LastName = textBox1.Text,
-                FirstName = textBox2.Text
+                FullName = textBox1.Text,
+                //FirstName = textBox2.Text
             };
             users.Add(u);
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Comma Seperated Values (*.csv)|*.csv";
+            sfd.DefaultExt = "csv";
+            sfd.AddExtension = true;
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                foreach (var u in users)
+                {
+                    sw.Write(u.FullName);
+                    sw.Write(";");
+                    sw.Write(u.ID);
+                    sw.WriteLine();
+
+                }
+            }
         }
     }
 }
