@@ -28,6 +28,7 @@ namespace WindowsFormsApp1
             //label2.Text = Resource1.FirstName;
             button1.Text = Resource1.Add;
             button2.Text = Resource1.Write;
+            button3.Text = Resource1.Delete;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -62,6 +63,15 @@ namespace WindowsFormsApp1
 
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+           var kivalasztott = (User)listBox1.SelectedItem;
+
+            var törlendö = (from x in users where x.ID == kivalasztott.ID select x).FirstOrDefault();
+
+            users.Remove(törlendö);
         }
     }
 }
