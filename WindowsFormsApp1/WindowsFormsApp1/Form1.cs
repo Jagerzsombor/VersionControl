@@ -22,8 +22,8 @@ namespace WindowsFormsApp1
             listBox1.DisplayMember = "FullName";
 
             InitializeComponent();
-            label1.Text = Resource1.LastName;
-            label2.Text = Resource1.FirstName;
+            label1.Text = Resource1.FullName;
+            //label2.Text = Resource1.FirstName;
             button1.Text = Resource1.Add;
         }
 
@@ -31,8 +31,8 @@ namespace WindowsFormsApp1
         {
             var u = new User()
             {
-                LastName = textBox1.Text,
-                FirstName = textBox2.Text
+                FullName = textBox1.Text,
+                //FirstName = textBox2.Text
             };
             users.Add(u);
 
