@@ -89,8 +89,10 @@ namespace WindowsFormsApp2
                 values[counter, 1] = f.Vendor;
                 values[counter, 2] = f.Side;
                 values[counter, 3] = f.District;
-                if (f.Elevator == true) values[counter, 4] = "Van";
-                else values[counter, 4] = "Nincs";
+                if (f.Elevator == true) 
+                    values[counter, 4] = "Van";
+                else 
+                    values[counter, 4] = "Nincs";
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
@@ -110,6 +112,20 @@ namespace WindowsFormsApp2
             headerRange.RowHeight = 40;
             headerRange.Interior.Color = Color.LightBlue;
             headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+
+            int lastRowID = xlSheet.UsedRange.Rows.Count;
+
+            Excel.Range tablaRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, headers.Length));
+            tablaRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range elsoOszlopRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            elsoOszlopRange.Font.Bold = true;
+            elsoOszlopRange.Interior.Color = Color.LightGoldenrodYellow;
+
+            Excel.Range utolsoOszlopRange = xlSheet.get_Range(GetCell(2, headers.Length), GetCell(lastRowID, headers.Length));
+            utolsoOszlopRange.Interior.Color = Color.LightGreen;
+            utolsoOszlopRange.NumberFormat = "# ##0.00";
         }
 
         private string GetCell(int x, int y)
