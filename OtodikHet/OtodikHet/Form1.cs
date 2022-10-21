@@ -46,6 +46,10 @@ namespace OtodikHet
             // Ebben az esetben a "var" a GetExchangeRatesResult property alapján kapja a típusát.
             // Ezért a result változó valójában string típusú.
             var result = response.GetCurrenciesResult;
+
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+
         }
 
         private void RefreshData()
