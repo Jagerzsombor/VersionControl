@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,12 @@ namespace hetedik
             dataGridView1.DataSource = Ticks;
 
             CreatePortfolio();
+            Nyereseg();
 
+        }
+
+        private void Nyereseg()
+        {
             List<decimal> Nyereségek = new List<decimal>();
             int intervalum = 30;
             DateTime kezdőDátum = (from x in Ticks select x.TradingDay).Min();
@@ -44,7 +50,6 @@ namespace hetedik
                                       select x)
                                         .ToList();
             MessageBox.Show(nyereségekRendezve[nyereségekRendezve.Count() / 5].ToString());
-
         }
 
         private void CreatePortfolio()
@@ -69,6 +74,35 @@ namespace hetedik
                 value += (decimal)last.Price * item.Volume;
             }
             return value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Comma Seperated Values (*.csv)|*.csv";
+            sfd.DefaultExt = "csv";
+            sfd.AddExtension = true;
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                sw.Write("Időszak");
+                sw.Write(";");
+                sw.Write("Nyereség");
+                sw.WriteLine();
+                
+                /*foreach (var t in Ticks)
+                {
+          
+                    sw.Write(t.TradingDay);
+                    sw.Write(";");
+                    sw.Write(t.Price);
+                    sw.WriteLine();
+
+                }*/
+            }
         }
     }
 }
