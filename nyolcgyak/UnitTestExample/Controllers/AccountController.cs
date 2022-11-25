@@ -32,6 +32,8 @@ namespace UnitTestExample.Controllers
 
             var account = new Account()
             {
+                ID = Guid.NewGuid(),
+
                 Email = email,
                 Password = password
             };
